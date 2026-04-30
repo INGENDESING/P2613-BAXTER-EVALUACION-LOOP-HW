@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>P2613 - Evaluacion Loop WFI Baxter | DML Ingenieros Consultores</title>
+  <meta name="description" content="Estudio hidraulico y termico del loop de sanitizacion WFI de Laboratorios Baxter S.A. ante el reemplazo de Spray-Ball estaticos por limpiadores orbitales GEA Orbital Cleaner Twister. 17 escenarios operacionales evaluados en Pipe-Flo Professional v19.1.">
+  <meta name="keywords" content="WFI, Water For Injection, GEA Twister, sanitizacion, ASME BPE 2024, hidraulica, loop de agua, Baxter, DML Ingenieros">
+  <meta name="author" content="DML Ingenieros Consultores S.A.S.">
+  <meta name="robots" content="index, follow">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="assets/logos/logo1.png">
+  <link rel="apple-touch-icon" href="assets/logos/logo1.png">
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://dmlingenieros.github.io/p2613-web/">
+  <meta property="og:title" content="P2613 - Evaluacion Loop WFI Baxter | DML Ingenieros Consultores">
+  <meta property="og:description" content="Estudio hidraulico y termico del loop de sanitizacion WFI de Laboratorios Baxter S.A. 17 escenarios operacionales evaluados.">
+  <meta property="og:image" content="https://dmlingenieros.github.io/p2613-web/assets/curvas/fig01_curva_bomba.png">
+  <meta property="og:locale" content="es_CO">
+  
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://dmlingenieros.github.io/p2613-web/">
+  <meta name="twitter:title" content="P2613 - Evaluacion Loop WFI Baxter | DML Ingenieros Consultores">
+  <meta name="twitter:description" content="Estudio hidraulico y termico del loop de sanitizacion WFI de Laboratorios Baxter S.A. 17 escenarios operacionales evaluados.">
+  <meta name="twitter:image" content="https://dmlingenieros.github.io/p2613-web/assets/curvas/fig01_curva_bomba.png">
+  
+  <!-- JSON-LD Schema.org -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "P2613 - Evaluacion Hidrotermica del Loop de Sanitizacion WFI",
+    "description": "Estudio hidraulico y termico del loop de sanitizacion WFI de Laboratorios Baxter S.A. ante el reemplazo de Spray-Ball estaticos por GEA Orbital Cleaner Twister.",
+    "author": {
+      "@type": "Organization",
+      "name": "DML Ingenieros Consultores S.A.S.",
+      "url": "https://dmlingenieros.com"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "DML Ingenieros Consultores S.A.S."
+    },
+    "datePublished": "2026-04-30",
+    "dateModified": "2026-04-30",
+    "about": {
+      "@type": "Thing",
+      "name": "Sistema WFI - Water For Injection"
+    },
+    "keywords": "WFI, GEA Twister, ASME BPE 2024, sanitizacion, hidraulica"
+  }
+  </script>
+  
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- GSAP + ScrollTrigger -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  
+  <!-- Custom Config -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              dark: '#0A2540',
+              blue: '#002A8D',
+              accent: '#FDC82F',
+              light: '#F6F9FC',
+              gray: '#4A5568',
+              surface: '#FFFFFF',
+            }
+          },
+          boxShadow: {
+            'card': '0 4px 24px rgba(10, 37, 64, 0.08)',
+            'card-hover': '0 8px 40px rgba(10, 37, 64, 0.14)',
+            'glow': '0 0 40px rgba(253, 200, 47, 0.2)',
+          }
+        }
+      }
+    }
+  </script>
+  
+  <link rel="stylesheet" href="css/custom.css">
+</head>
+<body class="font-sans text-brand-gray bg-brand-light antialiased overflow-x-hidden">
+  <!-- Skip to content -->
+  <a href="#hero" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[60] focus:px-4 focus:py-2 focus:bg-brand-dark focus:text-white focus:rounded-lg focus:font-semibold">Saltar al contenido principal</a>
+
+  <!-- ============ NAVBAR ============ -->
+  <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16 lg:h-20">
+        <!-- Logo area -->
+        <div class="flex items-center gap-4">
+          <img src="assets/logos/logo1.png" alt="DML Ingenieros" class="h-10 w-auto object-contain">
+          <div class="hidden sm:block h-8 w-px bg-white/20"></div>
+          <img src="assets/logos/logo2.png" alt="Baxter" class="h-8 w-auto object-contain hidden sm:block">
+        </div>
+        
+        <!-- Desktop Nav -->
+        <div class="hidden lg:flex items-center gap-1">
+          <a href="#hero" class="nav-link px-4 py-2 text-sm font-medium text-white/80 hover:text-white rounded-lg hover:bg-white/10 transition-colors" data-section="hero">Inicio</a>
+          <a href="#resumen" class="nav-link px-4 py-2 text-sm font-medium text-white/80 hover:text-white rounded-lg hover:bg-white/10 transition-colors" data-section="resumen">Resumen</a>
+          <a href="#escenarios" class="nav-link px-4 py-2 text-sm font-medium text-white/80 hover:text-white rounded-lg hover:bg-white/10 transition-colors" data-section="escenarios">Escenarios</a>
+          <a href="#equipos" class="nav-link px-4 py-2 text-sm font-medium text-white/80 hover:text-white rounded-lg hover:bg-white/10 transition-colors" data-section="equipos">Equipos</a>
+          <a href="#analisis" class="nav-link px-4 py-2 text-sm font-medium text-white/80 hover:text-white rounded-lg hover:bg-white/10 transition-colors" data-section="analisis">Analisis</a>
+          <a href="#documentos" class="nav-link px-4 py-2 text-sm font-medium text-white/80 hover:text-white rounded-lg hover:bg-white/10 transition-colors" data-section="documentos">Documentos</a>
+          <a href="#conclusiones" class="nav-link px-4 py-2 text-sm font-medium text-white/80 hover:text-white rounded-lg hover:bg-white/10 transition-colors" data-section="conclusiones">Conclusiones</a>
+        </div>
+        
+        <!-- Mobile menu button -->
+        <button id="mobile-menu-btn" class="lg:hidden p-2 rounded-lg text-white hover:bg-white/10 transition-colors" aria-label="Abrir menu de navegacion" aria-expanded="false" aria-controls="mobile-menu">
+          <i data-lucide="menu" class="w-6 h-6" aria-hidden="true"></i>
+        </button>
+      </div>
+    </div>
+    
+    <!-- Mobile Nav -->
+    <div id="mobile-menu" class="lg:hidden hidden bg-brand-dark/95 backdrop-blur-xl border-t border-white/10" role="navigation" aria-label="Menu movil">
+      <div class="px-4 py-3 space-y-1">
+        <a href="#hero" class="mobile-link block px-4 py-3 text-white/80 hover:text-white hover:bg-white/10 rounded-lg transition-colors">Inicio</a>
+        <a href="#resumen" class="mobile-link block px-4 py-3 text-white/80 hover:text-white hover:bg-white/10 rounded-lg transition-colors">Resumen</a>
+        <a href="#escenarios" class="mobile-link block px-4 py-3 text-white/80 hover:text-white hover:bg-white/10 rounded-lg transition-colors">Escenarios</a>
+        <a href="#equipos" class="mobile-link block px-4 py-3 text-white/80 hover:text-white hover:bg-white/10 rounded-lg transition-colors">Equipos</a>
+        <a href="#analisis" class="mobile-link block px-4 py-3 text-white/80 hover:text-white hover:bg-white/10 rounded-lg transition-colors">Analisis</a>
+        <a href="#documentos" class="mobile-link block px-4 py-3 text-white/80 hover:text-white hover:bg-white/10 rounded-lg transition-colors">Documentos</a>
+        <a href="#conclusiones" class="mobile-link block px-4 py-3 text-white/80 hover:text-white hover:bg-white/10 rounded-lg transition-colors">Conclusiones</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ============ HERO ============ -->
+  <section id="hero" class="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <!-- Background -->
+    <div class="absolute inset-0 bg-gradient-to-br from-brand-dark via-[#0d1f33] to-brand-blue"></div>
+    <div class="absolute inset-0 opacity-30" style="background-image: radial-gradient(circle at 20% 50%, rgba(253,200,47,0.08) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(0,42,141,0.3) 0%, transparent 50%);"></div>
+    
+    <!-- Decorative elements -->
+    <div class="absolute top-1/4 left-10 w-72 h-72 bg-brand-accent/5 rounded-full blur-3xl"></div>
+    <div class="absolute bottom-1/4 right-10 w-96 h-96 bg-brand-blue/10 rounded-full blur-3xl"></div>
+    
+    <div class="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <!-- Badge -->
+      <div class="gsap-hero-item inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 border border-white/10 text-white/80 text-sm font-medium mb-8">
+        <span class="w-2 h-2 rounded-full bg-brand-accent animate-pulse"></span>
+        Documento P2613-PR-INF-001 REV0
+      </div>
+      
+      <!-- Title -->
+      <h1 class="gsap-hero-item text-4xl sm:text-5xl lg:text-7xl font-extrabold text-white tracking-tight leading-tight mb-6">
+        Evaluacion del Loop<br>
+        <span class="text-brand-accent">de Agua Nueva Condicion</span>
+      </h1>
+      
+      <!-- Subtitle -->
+      <p class="gsap-hero-item text-lg sm:text-xl text-white/70 max-w-3xl mx-auto mb-4 leading-relaxed">
+        Estudio hidraulico y termico del sistema de sanitizacion WFI de <strong class="text-white">Laboratorios Baxter S.A.</strong> ante el reemplazo de Spray-Ball estaticos por limpiadores orbitales <strong class="text-white">GEA Orbital Cleaner Twister</strong>.
+      </p>
+      
+      <!-- Meta info -->
+      <div class="gsap-hero-item flex flex-wrap items-center justify-center gap-4 text-white/50 text-sm mb-10">
+        <span class="flex items-center gap-1.5"><i data-lucide="building-2" class="w-4 h-4"></i> Baxter S.A. - Cali</span>
+        <span class="hidden sm:inline">|</span>
+        <span class="flex items-center gap-1.5"><i data-lucide="users" class="w-4 h-4"></i> DML Ingenieros Consultores</span>
+        <span class="hidden sm:inline">|</span>
+        <span class="flex items-center gap-1.5"><i data-lucide="calendar" class="w-4 h-4"></i> Abril 2026</span>
+      </div>
+      
+      <!-- CTAs -->
+      <div class="gsap-hero-item flex flex-col sm:flex-row items-center justify-center gap-4">
+        <a href="#escenarios" class="group inline-flex items-center gap-2 px-8 py-4 bg-brand-accent text-brand-dark font-semibold rounded-xl hover:shadow-glow transition-all duration-300 hover:-translate-y-0.5">
+          Explorar Resultados
+          <i data-lucide="arrow-down" class="w-5 h-5 group-hover:translate-y-0.5 transition-transform"></i>
+        </a>
+        <a href="#documentos" class="group inline-flex items-center gap-2 px-8 py-4 bg-white/10 text-white font-semibold rounded-xl border border-white/20 hover:bg-white/20 transition-all duration-300" aria-label="Ver documentos de entrega">
+          <i data-lucide="file-text" class="w-5 h-5" aria-hidden="true"></i>
+          Ver Documentos
+        </a>
+      </div>
+    </div>
+    
+    <!-- Scroll indicator -->
+    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/40">
+      <span class="text-xs uppercase tracking-widest">Scroll</span>
+      <div class="w-6 h-10 rounded-full border-2 border-white/30 flex justify-center pt-2">
+        <div class="w-1.5 h-3 bg-brand-accent rounded-full animate-bounce"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ RESUMEN EJECUTIVO ============ -->
+  <section id="resumen" class="py-20 lg:py-28 bg-brand-light">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- Section header -->
+      <div class="text-center mb-16 gsap-section">
+        <span class="inline-block px-3 py-1 text-xs font-semibold tracking-wider text-brand-blue uppercase bg-brand-blue/10 rounded-full mb-4">Resumen Ejecutivo</span>
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-brand-dark mb-4">Hallazgos Centrales</h2>
+        <p class="text-lg text-brand-gray max-w-2xl mx-auto">Sintesis de los resultados del estudio hidraulico y termico bajo 16 escenarios operacionales y la propuesta de mejora (Escenario 17).</p>
+      </div>
+      
+      <!-- Dashboard Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
+        <!-- Card 1: Hallazgo Central -->
+        <div class="gsap-card group bg-white rounded-2xl p-8 shadow-card hover:shadow-card-hover transition-all duration-300 hover:-translate-y-1 border border-gray-100">
+          <div class="flex items-start justify-between mb-6">
+            <div class="p-3 rounded-xl bg-emerald-50 text-emerald-600">
+              <i data-lucide="gauge" class="w-8 h-8"></i>
+            </div>
+            <span class="text-5xl font-extrabold text-emerald-500"><span id="dash-pass-count" data-inject="pass-count">2</span><span class="text-2xl text-brand-gray font-medium">/16</span></span>
+          </div>
+          <h3 class="text-xl font-bold text-brand-dark mb-2">Hallazgo Central</h3>
+          <p class="text-brand-gray leading-relaxed">Solo <span id="dash-pass-text" data-inject="pass-count">2</span> de los 16 escenarios operacionales iniciales cumplen con la presion minima de <strong class="text-brand-dark">58 psig (4.0 bar)</strong> exigida por el GEA Twister. Margen critico: tan solo <strong class="text-amber-600" id="dash-critical-margin" data-inject="critical-margin">0.97 psig</strong>.</p>
+          <div class="mt-6 pt-6 border-t border-gray-100 flex items-center gap-2 text-sm text-brand-gray">
+            <i data-lucide="info" class="w-4 h-4 text-brand-accent"></i>
+            <span>Escenarios 2 y 4: operacion unitaria de tanque</span>
+          </div>
+        </div>
+        
+        <!-- Card 2: Limite Hidraulico -->
+        <div class="gsap-card group bg-white rounded-2xl p-8 shadow-card hover:shadow-card-hover transition-all duration-300 hover:-translate-y-1 border border-gray-100">
+          <div class="flex items-start justify-between mb-6">
+            <div class="p-3 rounded-xl bg-rose-50 text-rose-600">
+              <i data-lucide="alert-triangle" class="w-8 h-8"></i>
+            </div>
+            <span class="text-5xl font-extrabold text-rose-500"><span id="dash-min-fail-psig" data-inject="min-fail-psig">44.99</span><span class="text-2xl text-brand-gray font-medium">psig</span></span>
+          </div>
+          <h3 class="text-xl font-bold text-brand-dark mb-2">Limite Hidraulico</h3>
+          <p class="text-brand-gray leading-relaxed">La bomba Waukesha <strong class="text-brand-dark">C216</strong> opera a maxima capacidad (60 Hz, 3600 rpm) sin margen adicional. Es insuficiente para todos los escenarios combinados (6-16). El cuello de botella es exclusivamente la bomba.</p>
+          <div class="mt-6 pt-6 border-t border-gray-100 flex items-center gap-2 text-sm text-brand-gray">
+            <i data-lucide="zap" class="w-4 h-4 text-brand-accent"></i>
+            <span>Punto de operacion maximo alcanzado sin cumplir requisito</span>
+          </div>
+        </div>
+        
+        <!-- Card 3: Estado Termico -->
+        <div class="gsap-card group bg-white rounded-2xl p-8 shadow-card hover:shadow-card-hover transition-all duration-300 hover:-translate-y-1 border border-gray-100">
+          <div class="flex items-start justify-between mb-6">
+            <div class="p-3 rounded-xl bg-sky-50 text-sky-600">
+              <i data-lucide="thermometer" class="w-8 h-8"></i>
+            </div>
+            <span class="text-5xl font-extrabold text-sky-500">PASS</span>
+          </div>
+          <h3 class="text-xl font-bold text-brand-dark mb-2">Estado Termico</h3>
+          <p class="text-brand-gray leading-relaxed">Todos los escenarios mantienen temperatura final <strong class="text-brand-dark">>= 80 C</strong>. El intercambiador de calor <strong class="text-brand-dark">Teringo BEM</strong> (1.46 MW) no representa limitacion termica en ninguna condicion evaluada.</p>
+          <div class="mt-6 pt-6 border-t border-gray-100 flex items-center gap-2 text-sm text-brand-gray">
+            <i data-lucide="check-circle" class="w-4 h-4 text-emerald-500"></i>
+            <span>Balance termico verificado para 4 configuraciones de linea</span>
+          </div>
+        </div>
+        
+        <!-- Card 4: Propuesta ESC-17 -->
+        <div class="gsap-card group bg-white rounded-2xl p-8 shadow-card hover:shadow-card-hover transition-all duration-300 hover:-translate-y-1 border-2 border-brand-accent/30 relative overflow-hidden">
+          <div class="absolute top-0 right-0 w-32 h-32 bg-brand-accent/5 rounded-full -translate-y-1/2 translate-x-1/2"></div>
+          <div class="flex items-start justify-between mb-6 relative">
+            <div class="p-3 rounded-xl bg-indigo-50 text-indigo-600">
+              <i data-lucide="lightbulb" class="w-8 h-8"></i>
+            </div>
+            <span class="text-5xl font-extrabold text-indigo-500">+<span id="dash-esc17-margin" data-inject="esc17-margin">8.5</span><span class="text-2xl text-brand-gray font-medium">psig</span></span>
+          </div>
+          <h3 class="text-xl font-bold text-brand-dark mb-2">Propuesta ESC-17</h3>
+          <p class="text-brand-gray leading-relaxed">La bomba <strong class="text-brand-dark">Waukesha C218-2x1.5x8</strong> (30 hp) con valvula de control al <strong class="text-brand-dark">35%</strong> provee <strong class="text-indigo-600" id="dash-esc17-psig" data-inject="esc17-psig">66.50 psig</strong> en el punto de uso, superando el umbral con margen operacional de <span id="dash-esc17-margin-text" data-inject="esc17-margin">8.5</span> psig.</p>
+          <div class="mt-6 pt-6 border-t border-gray-100 flex items-center gap-2 text-sm text-brand-gray">
+            <i data-lucide="shield-check" class="w-4 h-4 text-brand-accent"></i>
+            <span>Requiere Change Control e IQ/OQ antes de construccion</span>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Comparison table -->
+      <div class="mt-16 gsap-section">
+        <div class="bg-white rounded-2xl shadow-card overflow-hidden border border-gray-100">
+          <div class="px-6 py-4 bg-brand-dark/5 border-b border-gray-100">
+            <h3 class="text-lg font-bold text-brand-dark flex items-center gap-2">
+              <i data-lucide="git-compare" class="w-5 h-5 text-brand-blue"></i>
+              Comparacion Tecnologica: Spray-Ball estatico vs. GEA Orbital Twister
+            </h3>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full text-sm">
+              <thead>
+                <tr class="bg-gray-50">
+                  <th class="px-6 py-3 text-left font-semibold text-brand-dark">Parametro</th>
+                  <th class="px-6 py-3 text-center font-semibold text-brand-gray">Spray-Ball estatico</th>
+                  <th class="px-6 py-3 text-center font-semibold text-brand-blue">GEA Orbital Twister</th>
+                  <th class="px-6 py-3 text-center font-semibold text-brand-dark">Variacion</th>
+                </tr>
+              </thead>
+              <tbody id="comparison-table-body" class="divide-y divide-gray-100">
+                <!-- JS populated -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============ ESCENARIOS INTERACTIVOS ============ -->
+  <section id="escenarios" class="py-20 lg:py-28 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- Section header -->
+      <div class="text-center mb-12 gsap-section">
+        <span class="inline-block px-3 py-1 text-xs font-semibold tracking-wider text-brand-blue uppercase bg-brand-blue/10 rounded-full mb-4">Escenarios de Operacion</span>
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-brand-dark mb-4">17 Escenarios Evaluados</h2>
+        <p class="text-lg text-brand-gray max-w-3xl mx-auto">Simulaciones dinamicas ejecutadas en <strong>Pipe-Flo Professional v19.1</strong>. Filtre por estado para identificar rapidamente las condiciones operacionales criticas.</p>
+      </div>
+      
+      <!-- Filters -->
+      <div class="flex flex-wrap justify-center gap-2 mb-12 gsap-section">
+        <button class="filter-btn active px-5 py-2.5 rounded-full text-sm font-semibold transition-all duration-200 bg-brand-dark text-white shadow-md" data-filter="all">Todos (17)</button>
+        <button class="filter-btn px-5 py-2.5 rounded-full text-sm font-semibold transition-all duration-200 bg-white text-brand-gray border border-gray-200 hover:border-emerald-300 hover:text-emerald-700" data-filter="cumple">Cumple</button>
+        <button class="filter-btn px-5 py-2.5 rounded-full text-sm font-semibold transition-all duration-200 bg-white text-brand-gray border border-gray-200 hover:border-blue-300 hover:text-blue-700" data-filter="cumple-s">Cumple*</button>
+        <button class="filter-btn px-5 py-2.5 rounded-full text-sm font-semibold transition-all duration-200 bg-white text-brand-gray border border-gray-200 hover:border-rose-300 hover:text-rose-700" data-filter="nocumple">No cumple</button>
+        <button class="filter-btn px-5 py-2.5 rounded-full text-sm font-semibold transition-all duration-200 bg-white text-brand-gray border border-gray-200 hover:border-indigo-300 hover:text-indigo-700" data-filter="propuesta">Propuesta</button>
+      </div>
+      
+      <!-- Stats bar -->
+      <div class="flex flex-wrap justify-center gap-6 mb-10 text-center gsap-section">
+        <div class="px-4">
+          <span id="stat-total" class="text-2xl font-bold text-brand-dark">17</span>
+          <p class="text-xs text-brand-gray uppercase tracking-wider">Total</p>
+        </div>
+        <div class="px-4 border-l border-gray-200">
+          <span id="stat-cumple" class="text-2xl font-bold text-emerald-500">2</span>
+          <p class="text-xs text-brand-gray uppercase tracking-wider">Cumplen</p>
+        </div>
+        <div class="px-4 border-l border-gray-200">
+          <span id="stat-cumples" class="text-2xl font-bold text-blue-500">3</span>
+          <p class="text-xs text-brand-gray uppercase tracking-wider">Cumple*</p>
+        </div>
+        <div class="px-4 border-l border-gray-200">
+          <span id="stat-nocumple" class="text-2xl font-bold text-rose-500">11</span>
+          <p class="text-xs text-brand-gray uppercase tracking-wider">No cumplen</p>
+        </div>
+        <div class="px-4 border-l border-gray-200">
+          <span id="stat-propuesta" class="text-2xl font-bold text-indigo-500">1</span>
+          <p class="text-xs text-brand-gray uppercase tracking-wider">Propuesta</p>
+        </div>
+      </div>
+      
+      <!-- Grid -->
+      <div id="scenarios-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+        <!-- JS populated -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ EQUIPOS CLAVE ============ -->
+  <section id="equipos" class="py-20 lg:py-28 bg-brand-light">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- Section header -->
+      <div class="text-center mb-16 gsap-section">
+        <span class="inline-block px-3 py-1 text-xs font-semibold tracking-wider text-brand-blue uppercase bg-brand-blue/10 rounded-full mb-4">Infraestructura</span>
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-brand-dark mb-4">Equipos Clave</h2>
+        <p class="text-lg text-brand-gray max-w-2xl mx-auto">Especificaciones tecnicas de los equipos criticos evaluados en el estudio. Materiales conforme <strong>ASME BPE 2024</strong>.</p>
+      </div>
+      
+      <!-- Equipment grid -->
+      <div id="equipment-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- JS populated -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ ANALISIS HIDRAULICO ============ -->
+  <section id="analisis" class="py-20 lg:py-28 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- Section header -->
+      <div class="text-center mb-16 gsap-section">
+        <span class="inline-block px-3 py-1 text-xs font-semibold tracking-wider text-brand-blue uppercase bg-brand-blue/10 rounded-full mb-4">Analisis Tecnico</span>
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-brand-dark mb-4">Analisis Hidraulico y Termico</h2>
+        <p class="text-lg text-brand-gray max-w-2xl mx-auto">Curvas de equipos, perfiles hidraulicos y balance termico del loop WFI.</p>
+      </div>
+      
+      <!-- Tabs -->
+      <div class="flex flex-wrap justify-center gap-2 mb-10 gsap-section">
+        <button class="analysis-tab active px-6 py-3 rounded-xl text-sm font-semibold transition-all duration-200 bg-brand-dark text-white shadow-md" data-tab="curvas">Curvas de Equipo</button>
+        <button class="analysis-tab px-6 py-3 rounded-xl text-sm font-semibold transition-all duration-200 bg-white text-brand-gray border border-gray-200 hover:border-brand-blue hover:text-brand-blue" data-tab="perfiles">Perfiles Hidraulicos</button>
+        <button class="analysis-tab px-6 py-3 rounded-xl text-sm font-semibold transition-all duration-200 bg-white text-brand-gray border border-gray-200 hover:border-brand-blue hover:text-brand-blue" data-tab="termico">Balance Termico</button>
+      </div>
+      
+      <!-- Tab content: Curvas -->
+      <div id="tab-curvas" class="analysis-content">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div class="gsap-card bg-brand-light rounded-2xl p-6 border border-gray-100">
+            <h4 class="font-bold text-brand-dark mb-4 flex items-center gap-2">
+              <i data-lucide="activity" class="w-5 h-5 text-brand-blue"></i>
+              Curva Bomba Waukesha C216
+            </h4>
+            <img src="assets/curvas/fig01_curva_bomba.png" alt="Curva Bomba" class="w-full rounded-xl shadow-sm hover:shadow-md transition-shadow cursor-zoom-in" onclick="openLightbox(this.src, this.alt)">
+            <p class="text-sm text-brand-gray mt-3">Caudal vs. presion de descarga para la bomba actual instalada.</p>
+          </div>
+          <div class="gsap-card bg-brand-light rounded-2xl p-6 border border-gray-100">
+            <h4 class="font-bold text-brand-dark mb-4 flex items-center gap-2">
+              <i data-lucide="target" class="w-5 h-5 text-brand-blue"></i>
+              Curva GEA Orbital Twister
+            </h4>
+            <img src="assets/curvas/fig02_curva_twister.png" alt="Curva Twister" class="w-full rounded-xl shadow-sm hover:shadow-md transition-shadow cursor-zoom-in" onclick="openLightbox(this.src, this.alt)">
+            <p class="text-sm text-brand-gray mt-3">Rango operacional: 11.9-18.8 USgpm @ 58-145 psig.</p>
+          </div>
+          <div class="gsap-card bg-brand-light rounded-2xl p-6 border border-gray-100">
+            <h4 class="font-bold text-brand-dark mb-4 flex items-center gap-2">
+              <i data-lucide="filter" class="w-5 h-5 text-brand-blue"></i>
+              Caida de Presion Filtro
+            </h4>
+            <img src="assets/curvas/fig03_filtro_dp.png" alt="DP Filtro" class="w-full rounded-xl shadow-sm hover:shadow-md transition-shadow cursor-zoom-in" onclick="openLightbox(this.src, this.alt)">
+            <p class="text-sm text-brand-gray mt-3">Sartopore 2: DP max 1.7 bar. DP real max: 0.039 bar.</p>
+          </div>
+          <div class="gsap-card bg-brand-light rounded-2xl p-6 border border-gray-100 lg:col-span-3">
+            <h4 class="font-bold text-brand-dark mb-4 flex items-center gap-2">
+              <i data-lucide="map" class="w-5 h-5 text-brand-blue"></i>
+              PFD Diagrama Hidraulica Propuesta (ESC-17)
+            </h4>
+            <img src="assets/curvas/pl001_preview.png" alt="PFD P2613-PR-PL-001" class="w-full max-w-4xl mx-auto rounded-xl shadow-sm hover:shadow-md transition-shadow cursor-zoom-in" onclick="openLightbox(this.src, this.alt)">
+            <div class="flex flex-wrap items-center justify-center gap-3 mt-4">
+              <p class="text-sm text-brand-gray">P2613-PR-PL-001 REV0 | PFD completo en PDF y DWG</p>
+              <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-gray-100 text-gray-400 text-xs font-semibold cursor-not-allowed" title="Disponible bajo solicitud">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+                PDF / DWG bajo solicitud
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Tab content: Perfiles -->
+      <div id="tab-perfiles" class="analysis-content hidden">
+        <div class="bg-brand-light rounded-2xl p-6 border border-gray-100">
+          <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
+            <h4 class="font-bold text-brand-dark flex items-center gap-2">
+              <i data-lucide="line-chart" class="w-5 h-5 text-brand-blue"></i>
+              Perfiles Hidraulicos Disponibles
+            </h4>
+            <select id="profile-selector" class="px-4 py-2 rounded-lg border border-gray-200 bg-white text-brand-dark font-medium focus:outline-none focus:ring-2 focus:ring-brand-blue/30" aria-label="Seleccionar escenario para ver perfil hidraulico">
+              <option value="01">ESC-01: Operacion normal</option>
+              <option value="04">ESC-04: Sanitizacion de un tanque</option>
+              <option value="05">ESC-05: Sanitizacion de una linea</option>
+              <option value="11">ESC-11: Sanitizacion simultanea tanque + linea</option>
+              <option value="16">ESC-16: Maxima demanda simultanea</option>
+              <option value="17">ESC-17: Propuesta C218 + VDC</option>
+            </select>
+          </div>
+          <div id="profile-container" class="space-y-4">
+            <img id="profile-image" src="assets/perfiles/fig_scenario_01_profile.png" alt="Perfil hidraulico" class="w-full max-w-4xl mx-auto rounded-xl shadow-lg cursor-zoom-in" onclick="openLightbox(this.src, this.alt)">
+            <p id="profile-caption" class="text-center text-sm text-brand-gray">ESC-01: Perfil hidraulico del loop en operacion normal sin sanitizacion activa.</p>
+          </div>
+          <div class="mt-6 p-4 bg-amber-50 border border-amber-200 rounded-xl flex items-start gap-3">
+            <i data-lucide="alert-circle" class="w-5 h-5 text-amber-600 mt-0.5 shrink-0"></i>
+            <p class="text-sm text-amber-800">Perfiles disponibles para 6 de 17 escenarios. Los perfiles restantes (2, 3, 6-10, 12-15) requieren exportacion manual desde Pipe-Flo Professional v19.1.</p>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Tab content: Termico -->
+      <div id="tab-termico" class="analysis-content hidden">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <div class="gsap-card bg-brand-light rounded-2xl p-6 border border-gray-100">
+            <h4 class="font-bold text-brand-dark mb-4 flex items-center gap-2">
+              <i data-lucide="thermometer-sun" class="w-5 h-5 text-brand-blue"></i>
+              Balance Termico - Loop WFI
+            </h4>
+            <div class="overflow-x-auto">
+              <table class="w-full text-sm">
+                <thead>
+                  <tr class="bg-white">
+                    <th class="px-4 py-3 text-left font-semibold text-brand-dark rounded-tl-lg">Escenario</th>
+                    <th class="px-4 py-3 text-center font-semibold text-brand-dark">Longitud</th>
+                    <th class="px-4 py-3 text-center font-semibold text-brand-dark">Diametro</th>
+                    <th class="px-4 py-3 text-center font-semibold text-brand-dark">Aislamiento</th>
+                    <th class="px-4 py-3 text-center font-semibold text-brand-dark rounded-tr-lg">T final</th>
+                  </tr>
+                </thead>
+                <tbody id="thermal-table-body" class="divide-y divide-gray-200">
+                  <!-- JS populated -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="gsap-card bg-emerald-50 rounded-2xl p-6 border border-emerald-100">
+            <h4 class="font-bold text-brand-dark mb-4 flex items-center gap-2">
+              <i data-lucide="check-circle-2" class="w-5 h-5 text-emerald-600"></i>
+              Resultado Termico
+            </h4>
+            <div class="space-y-4">
+              <div class="flex items-center justify-between p-4 bg-white rounded-xl">
+                <span class="text-brand-gray">Temperatura minima requerida</span>
+                <span class="text-xl font-bold text-brand-dark">>= 80 C</span>
+              </div>
+              <div class="flex items-center justify-between p-4 bg-white rounded-xl">
+                <span class="text-brand-gray">Temperatura minima obtenida</span>
+                <span class="text-xl font-bold text-emerald-600" id="thermal-min-temp" data-inject="thermal-min-temp">81.34 C</span>
+              </div>
+              <div class="flex items-center justify-between p-4 bg-white rounded-xl">
+                <span class="text-brand-gray">Margen termico minimo</span>
+                <span class="text-xl font-bold text-emerald-600" id="thermal-min-margin" data-inject="thermal-min-margin">+1.34 C</span>
+              </div>
+              <div class="p-4 bg-emerald-100/50 rounded-xl">
+                <p class="text-sm text-emerald-800 leading-relaxed">
+                  <strong>Conclusion:</strong> El intercambiador Teringo BEM (1.46 MW) mantiene la temperatura del loop WFI por encima del umbral GMP en todas las condiciones evaluadas, incluso para la linea larga sin aislamiento termico.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============ DOCUMENTOS DE ENTREGA ============ -->
+  <section id="documentos" class="py-20 lg:py-28 bg-brand-light">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- Section header -->
+      <div class="text-center mb-16 gsap-section">
+        <span class="inline-block px-3 py-1 text-xs font-semibold tracking-wider text-brand-blue uppercase bg-brand-blue/10 rounded-full mb-4">Documentacion</span>
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-brand-dark mb-4">Documentos de Entrega</h2>
+        <p class="text-lg text-brand-gray max-w-2xl mx-auto">Paquete completo de entregables del proyecto. Transmittal <strong>P2613-PR-TR-001 REV0</strong> emitido el 29/04/2026 para aprobacion y comentarios.</p>
+      </div>
+      
+      <!-- Category filters -->
+      <div class="flex flex-wrap justify-center gap-2 mb-8 gsap-section">
+        <button class="doc-filter active px-5 py-2.5 rounded-full text-sm font-semibold transition-all duration-200 bg-brand-dark text-white shadow-md" data-dfilter="all">Todos</button>
+        <button class="doc-filter px-5 py-2.5 rounded-full text-sm font-semibold transition-all duration-200 bg-white text-brand-gray border border-gray-200 hover:border-brand-blue" data-dfilter="Informes">Informes</button>
+        <button class="doc-filter px-5 py-2.5 rounded-full text-sm font-semibold transition-all duration-200 bg-white text-brand-gray border border-gray-200 hover:border-brand-blue" data-dfilter="Hoja de Datos">Hojas de Datos</button>
+        <button class="doc-filter px-5 py-2.5 rounded-full text-sm font-semibold transition-all duration-200 bg-white text-brand-gray border border-gray-200 hover:border-brand-blue" data-dfilter="Simulaciones">Simulaciones</button>
+        <button class="doc-filter px-5 py-2.5 rounded-full text-sm font-semibold transition-all duration-200 bg-white text-brand-gray border border-gray-200 hover:border-brand-blue" data-dfilter="Planos">Planos</button>
+        <button class="doc-filter px-5 py-2.5 rounded-full text-sm font-semibold transition-all duration-200 bg-white text-brand-gray border border-gray-200 hover:border-brand-blue" data-dfilter="Transmittal">Transmittal</button>
+      </div>
+      
+      <!-- Search -->
+      <div class="max-w-md mx-auto mb-10 gsap-section">
+        <div class="relative">
+          <i data-lucide="search" class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400"></i>
+          <input type="text" id="doc-search" placeholder="Buscar documento por ID o descripcion..." aria-label="Buscar documento por ID o descripcion" class="w-full pl-12 pr-4 py-3 rounded-xl border border-gray-200 bg-white text-brand-dark placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-brand-blue/30 focus:border-brand-blue transition-all">
+        </div>
+      </div>
+      
+      <!-- Status -->
+      <div class="max-w-3xl mx-auto mb-10 p-4 bg-emerald-50 border border-emerald-200 rounded-xl flex items-start gap-3 gsap-section">
+        <i data-lucide="check-circle-2" class="w-5 h-5 text-emerald-600 mt-0.5 shrink-0"></i>
+        <div>
+          <p class="text-sm font-semibold text-emerald-800">Paquete de entregables completo</p>
+          <p class="text-sm text-emerald-700">Todos los documentos listados en el transmittal TR-001 REV0 se encuentran disponibles para descarga, incluyendo el <strong>P2613-PR-PL-001 "PFD Diagrama Hidraulica Propuesta"</strong> en formatos PDF y DWG.</p>
+        </div>
+      </div>
+      
+      <!-- Documents table -->
+      <div class="bg-white rounded-2xl shadow-card overflow-hidden border border-gray-100 gsap-section">
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm">
+            <thead>
+              <tr class="bg-brand-dark text-white">
+                <th class="px-4 py-3 text-left font-semibold">Item</th>
+                <th class="px-4 py-3 text-left font-semibold">ID Documento</th>
+                <th class="px-4 py-3 text-left font-semibold">Descripcion</th>
+                <th class="px-4 py-3 text-center font-semibold">Rev.</th>
+                <th class="px-4 py-3 text-center font-semibold">Pag.</th>
+                <th class="px-4 py-3 text-center font-semibold">Descargar</th>
+              </tr>
+            </thead>
+            <tbody id="documents-table-body" class="divide-y divide-gray-100">
+              <!-- JS populated -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CONCLUSIONES ============ -->
+  <section id="conclusiones" class="py-20 lg:py-28 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- Section header -->
+      <div class="text-center mb-16 gsap-section">
+        <span class="inline-block px-3 py-1 text-xs font-semibold tracking-wider text-brand-blue uppercase bg-brand-blue/10 rounded-full mb-4">Conclusiones</span>
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-brand-dark mb-4">Conclusiones Tecnicas</h2>
+        <p class="text-lg text-brand-gray max-w-2xl mx-auto">Siete conclusiones derivadas del analisis integral hidraulico y termico del loop WFI bajo las nuevas condiciones operacionales.</p>
+      </div>
+      
+      <!-- Timeline -->
+      <div class="relative">
+        <!-- Center line -->
+        <div class="absolute left-4 lg:left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-brand-blue via-brand-accent to-brand-blue lg:-translate-x-px"></div>
+        
+        <div id="conclusions-timeline" class="space-y-12">
+          <!-- JS populated -->
+        </div>
+      </div>
+      
+      <!-- Next steps -->
+      <div class="mt-20 gsap-section">
+        <div class="bg-brand-dark rounded-2xl p-8 lg:p-12 text-white relative overflow-hidden">
+          <div class="absolute top-0 right-0 w-64 h-64 bg-brand-accent/10 rounded-full -translate-y-1/2 translate-x-1/2"></div>
+          <div class="relative z-10">
+            <h3 class="text-2xl lg:text-3xl font-bold mb-6 flex items-center gap-3">
+              <i data-lucide="route" class="w-8 h-8 text-brand-accent"></i>
+              Proximos Pasos Recomendados
+            </h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div class="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/10">
+                <div class="w-10 h-10 rounded-lg bg-brand-accent/20 flex items-center justify-center mb-4">
+                  <span class="text-brand-accent font-bold">1</span>
+                </div>
+                <h4 class="font-semibold mb-2">Change Control Formal</h4>
+                <p class="text-white/70 text-sm leading-relaxed">Iniciar proceso de Change Control bajo 21 CFR 211.68 para la modificacion de infraestructura critica (bomba C218 + VDC).</p>
+              </div>
+              <div class="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/10">
+                <div class="w-10 h-10 rounded-lg bg-brand-accent/20 flex items-center justify-center mb-4">
+                  <span class="text-brand-accent font-bold">2</span>
+                </div>
+                <h4 class="font-semibold mb-2">Calificacion IQ/OQ</h4>
+                <p class="text-white/70 text-sm leading-relaxed">Preparar protocolos de calificacion IQ/OQ para la nueva bomba C218 y valvula de control, verificando materiales ASME BPE SF-1.</p>
+              </div>
+              <div class="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/10">
+                <div class="w-10 h-10 rounded-lg bg-brand-accent/20 flex items-center justify-center mb-4">
+                  <span class="text-brand-accent font-bold">3</span>
+                </div>
+                <h4 class="font-semibold mb-2">Validacion de Dead Legs</h4>
+                <p class="text-white/70 text-sm leading-relaxed">Verificar que todos los dead legs cumplan <= 3D segun ASME BPE SD-3 antes de aprobacion para construccion.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="bg-brand-dark text-white py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
+        <!-- Brand -->
+        <div class="lg:col-span-2">
+          <div class="flex items-center gap-4 mb-6">
+            <img src="assets/logos/logo1.png" alt="DML" class="h-12 w-auto">
+            <img src="assets/logos/logo2.png" alt="Baxter" class="h-10 w-auto">
+          </div>
+          <p class="text-white/60 leading-relaxed mb-4 max-w-md">
+            Evaluacion hidraulica y termica del loop de sanitizacion WFI de Laboratorios Baxter S.A. Proyecto ejecutado por DML Ingenieros Consultores S.A.S.
+          </p>
+          <div class="flex items-center gap-2 text-sm text-white/40">
+            <i data-lucide="file-text" class="w-4 h-4"></i>
+            <span>P2613-PR-INF-001 REV0</span>
+          </div>
+        </div>
+        
+        <!-- Team -->
+        <div>
+          <h4 class="font-semibold text-white mb-4 flex items-center gap-2">
+            <i data-lucide="users" class="w-4 h-4 text-brand-accent"></i>
+            Equipo del Proyecto
+          </h4>
+          <ul class="space-y-3 text-white/60 text-sm">
+            <li class="flex items-center gap-2">
+              <span class="w-1.5 h-1.5 rounded-full bg-brand-accent"></span>
+              <span><strong class="text-white/80">J. Arboleda</strong> - Proceso</span>
+            </li>
+            <li class="flex items-center gap-2">
+              <span class="w-1.5 h-1.5 rounded-full bg-brand-accent"></span>
+              <span><strong class="text-white/80">H. Rosero</strong> - Revisor</span>
+            </li>
+            <li class="flex items-center gap-2">
+              <span class="w-1.5 h-1.5 rounded-full bg-brand-accent"></span>
+              <span><strong class="text-white/80">F. Navia</strong> - PM</span>
+            </li>
+          </ul>
+        </div>
+        
+        <!-- Normas -->
+        <div>
+          <h4 class="font-semibold text-white mb-4 flex items-center gap-2">
+            <i data-lucide="book-open" class="w-4 h-4 text-brand-accent"></i>
+            Referencias
+          </h4>
+          <ul class="space-y-2 text-white/60 text-sm">
+            <li>ASME BPE 2024</li>
+            <li>FDA 21 CFR 211.68</li>
+            <li>EU GMP Annex 1 (2022)</li>
+            <li>USP &lt;1231&gt;</li>
+            <li>P2314-PR-INF-002 (2023)</li>
+          </ul>
+        </div>
+      </div>
+      
+      <!-- Bottom bar -->
+      <div class="pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <p class="text-white/40 text-sm"> DML Ingenieros Consultores S.A.S. | Todos los derechos reservados.</p>
+        <p class="text-white/40 text-sm">Emitido: 29 de abril de 2026</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ============ MODALS ============ -->
+  
+  <!-- Scenario Modal -->
+  <div id="scenario-modal" class="fixed inset-0 z-[100] hidden" role="dialog" aria-modal="true" aria-labelledby="modal-title" aria-hidden="true">
+    <div class="absolute inset-0 bg-brand-dark/80 backdrop-blur-sm" onclick="closeScenarioModal()"></div>
+    <div class="relative z-10 flex items-center justify-center min-h-screen p-4">
+      <div class="bg-white rounded-2xl shadow-2xl max-w-5xl w-full max-h-[90vh] overflow-y-auto">
+        <div class="sticky top-0 bg-white border-b border-gray-100 px-6 py-4 flex items-center justify-between rounded-t-2xl z-10">
+          <div>
+            <h3 id="modal-title" class="text-xl font-bold text-brand-dark">Escenario</h3>
+            <p id="modal-subtitle" class="text-sm text-brand-gray">Descripcion</p>
+          </div>
+          <button onclick="closeScenarioModal()" class="p-2 rounded-lg hover:bg-gray-100 transition-colors" aria-label="Cerrar modal de escenario" type="button">
+            <i data-lucide="x" class="w-6 h-6 text-brand-gray" aria-hidden="true"></i>
+          </button>
+        </div>
+        <div class="p-6">
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div class="lg:col-span-2">
+              <img id="modal-image" src="" alt="Infografia" class="w-full rounded-xl shadow-lg">
+            </div>
+            <div class="space-y-4">
+              <div class="bg-brand-light rounded-xl p-4">
+                <h4 class="font-semibold text-brand-dark mb-3">Datos Tecnicos</h4>
+                <div id="modal-stats" class="space-y-2 text-sm">
+                  <!-- JS populated -->
+                </div>
+              </div>
+              <div id="modal-actions" class="space-y-2">
+                <!-- JS populated -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Lightbox -->
+  <div id="lightbox" class="fixed inset-0 z-[100] hidden" role="dialog" aria-modal="true" aria-label="Vista ampliada de imagen" aria-hidden="true" onclick="closeLightbox()">
+    <div class="absolute inset-0 bg-brand-dark/90 backdrop-blur-md"></div>
+    <div class="relative z-10 flex items-center justify-center min-h-screen p-4">
+      <img id="lightbox-image" src="" alt="" class="max-w-full max-h-[85vh] rounded-xl shadow-2xl">
+      <button class="absolute top-6 right-6 p-2 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors" aria-label="Cerrar vista ampliada" type="button" onclick="event.stopPropagation(); closeLightbox();">
+        <i data-lucide="x" class="w-6 h-6" aria-hidden="true"></i>
+      </button>
+    </div>
+  </div>
+  
+  <!-- Equipment Modal -->
+  <div id="equipment-modal" class="fixed inset-0 z-[100] hidden" role="dialog" aria-modal="true" aria-labelledby="eq-modal-title" aria-hidden="true">
+    <div class="absolute inset-0 bg-brand-dark/80 backdrop-blur-sm" onclick="closeEquipmentModal()"></div>
+    <div class="relative z-10 flex items-center justify-center min-h-screen p-4">
+      <div class="bg-white rounded-2xl shadow-2xl max-w-2xl w-full">
+        <div class="px-6 py-4 border-b border-gray-100 flex items-center justify-between">
+          <h3 id="eq-modal-title" class="text-xl font-bold text-brand-dark">Equipo</h3>
+          <button onclick="closeEquipmentModal()" class="p-2 rounded-lg hover:bg-gray-100 transition-colors" aria-label="Cerrar modal de equipo" type="button">
+            <i data-lucide="x" class="w-6 h-6 text-brand-gray" aria-hidden="true"></i>
+          </button>
+        </div>
+        <div class="p-6">
+          <div id="eq-modal-content" class="space-y-4">
+            <!-- JS populated -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ SCRIPTS ============ -->
+  <script src="js/data.js"></script>
+  <script src="js/animations.js"></script>
+  <script src="js/app.js"></script>
+  
+  <script>
+    // Initialize Lucide icons after DOM ready
+    document.addEventListener('DOMContentLoaded', () => {
+      lucide.createIcons();
+    });
+  </script>
+</body>
+</html>
