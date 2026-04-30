@@ -589,6 +589,10 @@
     renderThermal();
     initDocumentFilters();
     renderConclusions();
+    // Animate timeline items after they've been injected into the DOM
+    if (typeof initTimelineAnimations === 'function') {
+      initTimelineAnimations();
+    }
 
     console.log('[App] P2613 Web App initialized');
   }

@@ -6,6 +6,46 @@
 (function() {
   'use strict';
 
+  // Reusable timeline animation — called from app.js after renderConclusions()
+  function initTimelineAnimations() {
+    if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+
+    const timelineItems = document.querySelectorAll('.timeline-item');
+    if (timelineItems.length === 0) return;
+
+    timelineItems.forEach((item, index) => {
+      gsap.to(item, {
+        opacity: 1,
+        y: 0,
+        duration: 0.7,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: item,
+          start: 'top 85%',
+          toggleActions: 'play none none none'
+        }
+      });
+
+      // Animate the number badge
+      const badge = item.querySelector('.timeline-badge');
+      if (badge) {
+        gsap.from(badge, {
+          scale: 0,
+          duration: 0.5,
+          ease: 'back.out(1.7)',
+          scrollTrigger: {
+            trigger: item,
+            start: 'top 85%',
+            toggleActions: 'play none none none'
+          }
+        });
+      }
+    });
+  }
+
+  // Expose to app.js
+  window.initTimelineAnimations = initTimelineAnimations;
+
   // Wait for GSAP to be available
   function initAnimations() {
     if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
@@ -68,35 +108,8 @@
     });
 
     // ============ TIMELINE ITEMS ============
-    const timelineItems = document.querySelectorAll('.timeline-item');
-    timelineItems.forEach((item, index) => {
-      gsap.to(item, {
-        opacity: 1,
-        y: 0,
-        duration: 0.7,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: item,
-          start: 'top 85%',
-          toggleActions: 'play none none none'
-        }
-      });
-
-      // Animate the number badge
-      const badge = item.querySelector('.timeline-badge');
-      if (badge) {
-        gsap.from(badge, {
-          scale: 0,
-          duration: 0.5,
-          ease: 'back.out(1.7)',
-          scrollTrigger: {
-            trigger: item,
-            start: 'top 85%',
-            toggleActions: 'play none none none'
-          }
-        });
-      }
-    });
+    // Called again from app.js after renderConclusions() injects DOM
+    initTimelineAnimations();
 
     // ============ COUNTER ANIMATIONS ============
     function animateCounter(element, target, suffix = '', duration = 2) {
